@@ -1,6 +1,6 @@
 <?php
 
-namespace cewi\tools;
+namespace Tools;
 
 /**
  * Description of PrintjobCreator
@@ -11,7 +11,7 @@ class PrintjobCreator
 {
     public function helloworld()
     {
-        echo 'Helloworld';
+        return 'Helloworld';
     }
 
 }
