@@ -5,7 +5,7 @@
  * Author     : cewi <c.wichmann@gmx.de>
  */
 
-require_once __DIR__ . '/../../../autoload.php'; // Autoload files using Composer autoload
+require_once __DIR__.'/../../../autoload.php'; // Autoload files using Composer autoload
 
 use cewi\tools;
 

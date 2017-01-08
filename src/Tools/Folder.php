@@ -7,28 +7,26 @@ use Cake\Filesystem\File;
 use Cake\Filesystem\Folder as CakeFolder;
 
 /**
- * Description of Folder
+ * Folder related commands
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class Folder
 {
-
     /**
-     * the Folder
+     * the Folder.
      *
      * @var Cake\Filesystem\Folder
      */
     protected $_Folder;
 
     /**
-     *
      * @var string
      */
     protected $_path;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $path
      */
@@ -39,9 +37,10 @@ class Folder
     }
 
     /**
-     * delete all Files in Folder
+     * delete all Files in Folder.
      *
      * @return int
+     *
      * @throws FatalErrorException
      */
     public function deleteAllFiles()
@@ -49,14 +48,14 @@ class Folder
         $files = $this->_Folder->find();
         $deleted = 0;
         foreach ($files as $filename) {
-            $file = new File($this->_path . DS . $filename);
+            $file = new File($this->_path.DS.$filename);
             if ($file->delete()) {
-                $deleted++;
+                ++$deleted;
             } else {
                 throw new FatalErrorException(__('could not delete file {0}', [$file->name]));
             }
         }
+
         return $deleted;
     }
-
 }

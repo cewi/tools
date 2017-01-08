@@ -6,13 +6,12 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Cake\Filesystem\File as CakeFile;
 
 /**
- * Description of File
+ * File related commands
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class File
 {
-
     protected $_File;
 
     public function __construct($filename)
@@ -21,36 +20,38 @@ class File
     }
 
     /**
-     * extract Text from a file
+     * extract Text from a file.
      *
      * @param string $file
+     *
      * @return array
      */
     public function extractText()
     {
-        copy($this->_File->path, TMP . 'tmp.pdf');
+        copy($this->_File->path, TMP.'tmp.pdf');
 
         // convert to txt - file
         $command = $this->_pdfToText();
-        exec($command . TMP . 'tmp.pdf');
+        exec($command.TMP.'tmp.pdf');
 
         // extract text from file, split into pages
-        $text = explode(chr(12), file_get_contents(TMP . 'tmp.txt'));
+        $text = explode(chr(12), file_get_contents(TMP.'tmp.txt'));
 
         // there is always garbage after last page, don't know why..
         array_pop($text);
 
         // clean up
-        unlink(TMP . 'tmp.txt');
-        unlink(TMP . 'tmp.pdf');
+        unlink(TMP.'tmp.txt');
+        unlink(TMP.'tmp.pdf');
 
         return $text;
     }
 
     /**
-     * locate pdfToText binary and compose the command to convert pdfs to txt files
+     * locate pdfToText binary and compose the command to convert pdfs to txt files.
      *
      * @return string
+     *
      * @throws FileNotFoundException
      */
     protected function _pdfToText()
@@ -63,8 +64,8 @@ class File
             }
         } elseif (stristr(PHP_OS, 'WIN')) {
             // Windows
-            if (file_exists(ROOT . DS . 'bin' . DS . 'pdftotext.exe')) {
-                $pdfToText = ROOT . DS . 'bin' . DS . 'pdftotext.exe -enc UTF-8 -eol dos ';
+            if (file_exists(ROOT.DS.'bin'.DS.'pdftotext.exe')) {
+                $pdfToText = ROOT.DS.'bin'.DS.'pdftotext.exe -enc UTF-8 -eol dos ';
             }
         } else {
             // Linux
@@ -77,7 +78,7 @@ class File
         if (empty($pdfToText)) {
             throw new FileNotFoundException(__('binary {0} not found', ['pdftotext']));
         }
+
         return $pdfToText;
     }
-
 }
