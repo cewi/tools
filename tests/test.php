@@ -9,4 +9,3 @@ require_once __DIR__.'/../../../autoload.php'; // Autoload files using Composer 
 
 use cewi\tools;
 
-echo Tools\PrintjobCreator::helloworld();

@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Cake\Filesystem\File as CakeFile;
 
 /**
- * File related commands
+ * File related commands.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
