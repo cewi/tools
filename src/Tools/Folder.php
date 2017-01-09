@@ -21,6 +21,8 @@ class Folder
     protected $_Folder;
 
     /**
+     * folder path.
+     *
      * @var string
      */
     protected $_path;
@@ -72,7 +74,7 @@ class Folder
     public function copyAllFiles($destination)
     {
         if (!is_dir($destination)) {
-            throw new \InvalidArgumentException(__('Destination directroy does not exist'));
+            throw new \InvalidArgumentException(__('destination directory does not exist'));
         }
         $files = $this->_Folder->find();
         $copied = 0;
