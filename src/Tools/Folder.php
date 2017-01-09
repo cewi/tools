@@ -62,7 +62,7 @@ class Folder
     }
 
     /**
-     * copy all files in an directory to anpther dierectroy.
+     * copy all files in an directory to another directory.
      *
      * @param string $destination folder
      *
