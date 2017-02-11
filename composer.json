@@ -21,6 +21,9 @@
     "autoload": {
         "psr-0": {
             "Tools": "src/"
+        },
+        "psr-4": {
+            "Cewi\\Checkers\\": "src/Checkers/"
         }
     }
 }
