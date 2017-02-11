@@ -3,27 +3,20 @@
 namespace Cewi\Checkers;
 
 /**
- * Checks, if an Address should be delivered to a german postbox
+ * Checks, if an Address begins with a Salutation
  *
  * @author cewi <c.wichmann@gmx.de>
  * @license https://opensource.org/licenses/MIT
  */
-class PostboxChecker implements CheckerInterface
+class SalutationChecker
 {
-
-    /**
-     * how to deliver these envelopes
-     *
-     * @var string
-     */
-    protected $_type = 'Error';
 
     /**
      * Pattern to identify Postbox in an address string
      *
      * @var string
      */
-    protected $_pattern = '^(.*\s?)((?:Postfach|PF)\s?\d{2,6})(?:\s?)$';
+    protected $_pattern = '';
 
     /**
      *
@@ -32,32 +25,36 @@ class PostboxChecker implements CheckerInterface
     protected $_address = [];
 
     /**
-     * set type for delivery
+     * set pattern
      *
      * @param array $options
      */
     public function __construct($options)
     {
-        $this->_type = isset($options['type']) ? $options['type'] : 'Error';
+        if (!isset($options['salutations'])) {
+            $this->_pattern = '^this pattern will not be found!';
+        }
+        $this->_pattern = '^(' . implode('|', $options['salutations']) . ')(?:\s)(.*)$';
     }
 
     /**
-     * check if address contains valid german postbox string
+     * find a saluattaion at start of string
+     * remove it and save in database
      *
-     * @param array $address
-     * @return boolean
+     * @param string $address
+     * @return string
      */
-    public function isDeliverable($address)
+    public function check($address)
     {
         $this->_address = $address;
 
         if (preg_match('#' . $this->_pattern . '#i', $address['name'], $matches)) {
 
             $this->_address = array_merge($this->_address, [
-                'name' => trim($matches[1]),
-                'street' => trim($matches[2]),
-                'type' => $this->_type,
+                'salutation' => trim($matches[1]),
+                'name' => trim($matches[2]),
             ]);
+
             return true;
         }
         return false;
