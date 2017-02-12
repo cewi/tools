@@ -1,22 +1,12 @@
 <?php
 
-/*
- *  Copyright 2016 Voll-Komm
- * 
- *  Jahnstrasse 28a, 67245 Lambsheim
- *  Fon: 06233 4592520, Fax: 06233 4592518
- *  info@voll-komm.de
- *  
- *  www.voll-komm.de
- *  
- */
 require_once __DIR__ . '/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\PostboxChecker;
 
 /**
- * Description of PostboxCheckerTest
+ * PostboxCheckerTest
  *
  * @author cewi <c.wichmann@gmx.de>
  */

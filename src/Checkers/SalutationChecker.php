@@ -33,16 +33,17 @@ class SalutationChecker
     {
         if (!isset($options['salutations'])) {
             $this->_pattern = '^this pattern will not be found!';
+        } else {
+            $this->_pattern = '^(' . implode('|', $options['salutations']) . ')(?:\s)(.*)$';
         }
-        $this->_pattern = '^(' . implode('|', $options['salutations']) . ')(?:\s)(.*)$';
     }
 
     /**
-     * find a saluattaion at start of string
-     * remove it and save in database
+     * if a salutation is found at start of string
+     * remove it from name and save it in salutation field
      *
-     * @param string $address
-     * @return string
+     * @param array $address
+     * @return boolean
      */
     public function check($address)
     {
@@ -61,6 +62,7 @@ class SalutationChecker
     }
 
     /**
+     * get teh changed address
      *
      * @return array
      */

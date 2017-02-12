@@ -64,6 +64,7 @@ class PostboxChecker implements CheckerInterface
     }
 
     /**
+     * get changed Address
      *
      * @return array
      */

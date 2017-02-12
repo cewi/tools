@@ -1,22 +1,12 @@
 <?php
 
-/*
- *  Copyright 2016 Voll-Komm
- * 
- *  Jahnstrasse 28a, 67245 Lambsheim
- *  Fon: 06233 4592520, Fax: 06233 4592518
- *  info@voll-komm.de
- *  
- *  www.voll-komm.de
- *  
- */
 require_once __DIR__ . '/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\SalutationChecker;
 
 /**
- * Description of PostboxCheckerTest
+ * SaluatationCheckerTest
  *
  * @author cewi <c.wichmann@gmx.de>
  */
@@ -27,6 +17,7 @@ class SalutationCheckerTest extends TestCase
 
     /**
      * setUp method
+     * initialize checker
      *
      * @return void
      */
@@ -63,6 +54,10 @@ class SalutationCheckerTest extends TestCase
         $this->assertInstanceOf('Cewi\Checkers\SalutationChecker', $this->checker);
     }
 
+    /**
+     * test if saluataions are found 
+     *
+     */
     public function testCheck()
     {
         $addresses = [
