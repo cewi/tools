@@ -49,13 +49,10 @@ class SalutationChecker
     {
         $this->_address = $address;
 
-        if (preg_match('#' . $this->_pattern . '#i', $address['name'], $matches)) {
+        if (preg_match('#' . $this->_pattern . '#i', $this->_address['name'], $matches)) {
 
-            $this->_address = array_merge($this->_address, [
-                'salutation' => trim($matches[1]),
-                'name' => trim($matches[2]),
-            ]);
-
+            $this->_address['salutation'] = trim($matches[1]);
+            $this->_address['name'] = trim($matches[2]);
             return true;
         }
         return false;
