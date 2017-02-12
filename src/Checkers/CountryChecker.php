@@ -13,6 +13,13 @@ class CountryChecker
 {
 
     /**
+     * how to deliver these envelopes
+     *
+     * @var string
+     */
+    protected $_type = 'Error';
+
+    /**
      * countries to check
      *
      * @var array
@@ -58,6 +65,8 @@ class CountryChecker
      */
     public function __construct($options)
     {
+
+        $this->_type = isset($options['type']) ? $options['type'] : 'Error';
 
         if (isset($options['countries'])) {
 
@@ -112,8 +121,9 @@ class CountryChecker
             unset($country);
         }
 
-        // homeCountry is not deliverable by definition
+        // only homeCountry is not deliverable by definition
         if ($this->_address['country_id'] !== $this->_homeCountry['id']) {
+            $this->_address['type'] = $this->_type;
             return true;
         }
         return false;
