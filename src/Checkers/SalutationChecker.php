@@ -12,7 +12,7 @@ class SalutationChecker
 {
 
     /**
-     * Pattern to identify Postbox in an address string
+     * Pattern to identify Salutation in address string
      *
      * @var string
      */
@@ -62,7 +62,7 @@ class SalutationChecker
     }
 
     /**
-     * get teh changed address
+     * get changed address
      *
      * @return array
      */
