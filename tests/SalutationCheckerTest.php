@@ -1,25 +1,22 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\SalutationChecker;
 
 /**
- * SaluatationCheckerTest
+ * SaluatationCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class SalutationCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
      * setUp method
-     * initialize checker
-     *
-     * @return void
+     * initialize checker.
      */
     public function setUp()
     {
@@ -28,16 +25,14 @@ class SalutationCheckerTest extends TestCase
         $salutations = [
             'Herrn?(?:\sund\sFrau)?',
             'Frau(?:\sund\sHerrn?)?',
-            'Firma'
+            'Firma',
         ];
 
         $this->checker = new SalutationChecker(['salutations' => $salutations]);
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -45,9 +40,7 @@ class SalutationCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -55,8 +48,7 @@ class SalutationCheckerTest extends TestCase
     }
 
     /**
-     * test if saluataions are found 
-     *
+     * test if saluataions are found.
      */
     public function testCheck()
     {
@@ -72,27 +64,27 @@ class SalutationCheckerTest extends TestCase
         $expected = [
             [
                 'name' => 'Erika Mustermann Musterstraße 8 D-88888 Musterstadt',
-                'salutation' => 'Frau'
+                'salutation' => 'Frau',
             ],
             [
                 'name' => 'Max Mustermann Musterstraße 8 88888 Musterstadt',
-                'salutation' => 'Herrn'
+                'salutation' => 'Herrn',
             ],
             [
                 'name' => 'Mustermann Musterstraße 8 88888 Musterstadt',
-                'salutation' => 'Firma'
+                'salutation' => 'Firma',
             ],
             [
                 'name' => 'Max Mustermann Musterstraße 8 88888 Musterstadt',
-                'salutation' => 'Herr'
+                'salutation' => 'Herr',
             ],
             [
                 'name' => 'Max und Erika Mustermann Musterstraße 8 88888 Musterstadt',
-                'salutation' => 'Herrn und Frau'
+                'salutation' => 'Herrn und Frau',
             ],
             [
                 'name' => 'Erika und Max Mustermann Musterstraße 8 88888 Musterstadt',
-                'salutation' => 'Frau und Herrn'
+                'salutation' => 'Frau und Herrn',
             ],
             false,
         ];
@@ -106,5 +98,4 @@ class SalutationCheckerTest extends TestCase
             }
         }
     }
-
 }

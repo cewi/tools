@@ -3,68 +3,69 @@
 namespace Cewi\Checkers;
 
 /**
- * Checks, if an Address can be delivered by ourselves
+ * Checks, if an Address can be delivered by ourselves.
  *
  * @author cewi <c.wichmann@gmx.de>
  * @license https://opensource.org/licenses/MIT
  */
 class OwnChecker implements CheckerInterface
 {
-
     /**
-     * type if address ist not deliverable
+     * type if address ist not deliverable.
      *
      * @var string
      */
     protected $_type_error = 'Error';
 
     /**
-     * how to deliver these envelopes
+     * how to deliver these envelopes.
      *
      * @var string
      */
     protected $_type_success = 'Error';
 
     /**
-     * cities where we deliver ourselves
+     * cities where we deliver ourselves.
      *
      * @var array
      */
     protected $_zipCities = [];
 
     /**
-     * streets in thta cities
+     * streets in thta cities.
      *
      * @var array
      */
     protected $_zipStreets = [];
 
     /**
-     *
      * @var array
      */
     protected $_address = [];
 
     /**
-     * set type for delivery
+     * set type for delivery.
      *
      * @param array $options
      */
     public function __construct($options)
     {
+        // set types
         $this->_type_success = isset($options['type_success']) ? $options['type_success'] : 'Error';
         $this->_type_error = isset($options['type_error']) ? $options['type_error'] : 'Error';
 
+        // set arrays with patterns
         $this->_zipCities = isset($options['zipCities']) ? $options['zipCities'] : [];
-
         $this->_zipStreets = isset($options['zipStreets']) ? $options['zipStreets'] : [];
+        //dd($this->_zipStreets);
     }
 
     /**
-     * check if address contains valid german postbox string
+     * check if address contains valid german postbox string.
      *
      * @param array $address
-     * @return boolean
+     *
+     * @return bool
      */
     public function isDeliverable($address)
     {
@@ -78,7 +79,7 @@ class OwnChecker implements CheckerInterface
             $name = $this->_generateNormalized($this->_address['name']);
 
             // is the found city ok?
-            if (preg_match('#' . $this->_zipCities[$this->_address['zip']]['pattern'] . '#i', $city, $matches)) {
+            if (preg_match('#'.$this->_zipCities[$this->_address['zip']]['pattern'].'#i', $city, $matches)) {
 
                 // set id for city
                 $this->_address['city_id'] = $this->_zipCities[$this->_address['zip']]['id'];
@@ -86,7 +87,7 @@ class OwnChecker implements CheckerInterface
                 $streets = $this->_zipStreets[$this->_address['zip']];
 
                 foreach ($streets as $street) {
-                    if (preg_match('#' . $street['pattern'] . '\s?(.*)?$#i', $name, $matches, PREG_OFFSET_CAPTURE)) {
+                    if (preg_match('#'.$street['pattern'].'\s?(.*)?$#i', $name, $matches, PREG_OFFSET_CAPTURE)) {
                         $this->_address['street_id'] = $street['id'];
                         $this->_address['region_id'] = $street['region_id'];
                         $this->_address['street'] = $street['name'];
@@ -96,9 +97,11 @@ class OwnChecker implements CheckerInterface
                             $this->_address['number_letter'] = trim($matches[2]);
                         }
                         $this->_address['type'] = $this->_type_success;
+
                         return true;
                     }
                 }
+
                 return true;
             }
         }
@@ -107,7 +110,7 @@ class OwnChecker implements CheckerInterface
     }
 
     /**
-     * get changed Address
+     * get changed Address.
      *
      * @return array
      */
@@ -139,5 +142,4 @@ class OwnChecker implements CheckerInterface
         // trim the string again
         return trim($stringLowerCase);
     }
-
 }

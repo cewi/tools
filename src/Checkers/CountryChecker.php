@@ -4,79 +4,76 @@ namespace Cewi\Checkers;
 
 /**
  * Checks, if address contains country names and modifies address array
- * one country couls be defined as home-country
+ * one country couls be defined as home-country.
  *
  * @author cewi <c.wichmann@gmx.de>
  * @license https://opensource.org/licenses/MIT
  */
 class CountryChecker implements CheckerInterface
 {
-
     /**
-     * how to deliver these envelopes
+     * how to deliver these envelopes.
      *
      * @var string
      */
     protected $_type = 'Error';
 
     /**
-     * countries to check
+     * countries to check.
      *
      * @var array
      */
     protected $_countries;
 
     /**
-     * Pattern to identify Country names in an address string
+     * Pattern to identify Country names in an address string.
      *
      * @var string
      */
     protected $_countryPattern = '';
 
     /**
-     * Pattern to identify Zip-Prefixes of countries in address-string
+     * Pattern to identify Zip-Prefixes of countries in address-string.
      * 
      * @var string
      */
     protected $_countryPrefixPattern = '';
 
     /**
-     * country that should not be treated as "foreign"
+     * country that should not be treated as "foreign".
      *  
      * @var array
      */
     protected $_homeCountry = [
         'id' => 9999999,
         'name' => 'Neverland',
-        'prefix' => 'NE'
+        'prefix' => 'NE',
     ];
 
     /**
-     * the Address to check
+     * the Address to check.
      *
      * @var array
      */
     protected $_address = [];
 
     /**
-     * set pattern
+     * set pattern.
      *
      * @param array $options
      */
     public function __construct($options)
     {
-
         $this->_type = isset($options['type']) ? $options['type'] : 'Error';
 
         if (isset($options['countries'])) {
-
             $this->_countries = $options['countries'];
 
             // if name of a country is found. It must be at the end of the string
-            $this->_countryPattern = '^(.*)(?:\s)(' . implode('|', array_column($this->_countries, 'name')) . ')$';
+            $this->_countryPattern = '^(.*)(?:\s)('.implode('|', array_column($this->_countries, 'name')).')$';
 
             // A country prefix must be followed by a hyphen and a zip-code (3-6 digits) and in UPPERCASE
-            $this->_countryPrefixPattern = '^(.*)(?:\s)(' . implode('|', array_column($this->_countries, 'prefix')) . ')(?:\s?\-\s?)(\d{3,6})(.*)$';
+            $this->_countryPrefixPattern = '^(.*)(?:\s)('.implode('|', array_column($this->_countries, 'prefix')).')(?:\s?\-\s?)(\d{3,6})(.*)$';
         }
 
         if (isset($options['homeCountry'])) {
@@ -86,10 +83,11 @@ class CountryChecker implements CheckerInterface
 
     /**
      * check if address contains Country name or prefix
-     * modify address array
+     * modify address array.
      *
      * @param array $address
-     * @return boolean
+     *
+     * @return bool
      */
     public function isDeliverable($address)
     {
@@ -101,15 +99,15 @@ class CountryChecker implements CheckerInterface
         }
 
         // Is there a country-prefix (must be UPPERCASE)?
-        if (preg_match('#' . $this->_countryPrefixPattern . '#', $this->_address['name'], $matches)) {
+        if (preg_match('#'.$this->_countryPrefixPattern.'#', $this->_address['name'], $matches)) {
             $prefix = trim($matches[2]);
-            $this->_address['name'] = $matches[1] . ' ' . $matches[3] . $matches[4];
+            $this->_address['name'] = $matches[1].' '.$matches[3].$matches[4];
             $country = $this->_getCountryByPrefix($prefix);
         }
 
         // Is there a country-name at the end of the string=
         // id found ist has precendece over any found id
-        if (preg_match('#' . $this->_countryPattern . '#i', $this->_address['name'], $matches)) {
+        if (preg_match('#'.$this->_countryPattern.'#i', $this->_address['name'], $matches)) {
             $this->_address['name'] = $matches[1];
             $country = $this->_getCountryByName(ucfirst(strtolower(trim($matches[2]))));
         }
@@ -124,13 +122,15 @@ class CountryChecker implements CheckerInterface
         // only homeCountry is not deliverable by definition
         if ($this->_address['country_id'] !== $this->_homeCountry['id']) {
             $this->_address['type'] = $this->_type;
+
             return true;
         }
+
         return false;
     }
 
     /**
-     * get changed address
+     * get changed address.
      *
      * @return array
      */
@@ -140,9 +140,10 @@ class CountryChecker implements CheckerInterface
     }
 
     /**
-     * identity country array by prefix string
+     * identity country array by prefix string.
      *
      * @param string $prefix
+     *
      * @return array
      */
     protected function _getCountryByPrefix($prefix)
@@ -155,9 +156,10 @@ class CountryChecker implements CheckerInterface
     }
 
     /**
-     * identify country by name string
+     * identify country by name string.
      *
      * @param string $name
+     *
      * @return array
      */
     protected function _getCountryByName($name)
@@ -168,5 +170,4 @@ class CountryChecker implements CheckerInterface
 
         return array_shift($country);
     }
-
 }

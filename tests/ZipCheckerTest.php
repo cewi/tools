@@ -1,25 +1,22 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\ZipChecker;
 
 /**
- * SaluatationCheckerTest
+ * SaluatationCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class ZipCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
      * setUp method
-     * initialize checker
-     *
-     * @return void
+     * initialize checker.
      */
     public function setUp()
     {
@@ -29,9 +26,7 @@ class ZipCheckerTest extends TestCase
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -39,9 +34,7 @@ class ZipCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -49,12 +42,10 @@ class ZipCheckerTest extends TestCase
     }
 
     /**
-     * test if countries as found correctly
-     *
+     * test if countries as found correctly.
      */
     public function testCheck()
     {
-
         $data = [
             'Frau Erika Mustermann Musterweg 8 88888 Musterstadt',
             'Frau Erika Mustermann Musterweg 8 8888 Musterstadt', // not five digits
@@ -89,5 +80,4 @@ class ZipCheckerTest extends TestCase
             $this->assertEquals($expected[$key]['name'], $newAddress['name']);
         }
     }
-
 }

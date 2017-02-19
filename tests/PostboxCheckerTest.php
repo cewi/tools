@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\PostboxChecker;
 
 /**
- * PostboxCheckerTest
+ * PostboxCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class PostboxCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
-     * setUp method
-     *
-     * @return void
+     * setUp method.
      */
     public function setUp()
     {
@@ -28,9 +25,7 @@ class PostboxCheckerTest extends TestCase
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -38,9 +33,7 @@ class PostboxCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -48,7 +41,7 @@ class PostboxCheckerTest extends TestCase
     }
 
     /**
-     * Postfach-check
+     * Postfach-check.
      */
     public function testIsDeliverable()
     {
@@ -88,5 +81,4 @@ class PostboxCheckerTest extends TestCase
             }
         }
     }
-
 }

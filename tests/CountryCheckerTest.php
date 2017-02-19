@@ -1,25 +1,22 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\CountryChecker;
 
 /**
- * SaluatationCheckerTest
+ * SaluatationCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class CountryCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
      * setUp method
-     * initialize checker
-     *
-     * @return void
+     * initialize checker.
      */
     public function setUp()
     {
@@ -30,38 +27,36 @@ class CountryCheckerTest extends TestCase
                 0 => [
                     'id' => 1,
                     'name' => 'Deutschland',
-                    'prefix' => 'D'
+                    'prefix' => 'D',
                 ],
                 1 => [
                     'id' => 2,
                     'name' => 'Frankreich',
-                    'prefix' => 'F'
+                    'prefix' => 'F',
                 ],
                 2 => [
                     'id' => 3,
                     'name' => 'Italien',
-                    'prefix' => 'I'
+                    'prefix' => 'I',
                 ],
                 3 => [
                     'id' => 4,
                     'name' => 'Schweiz',
-                    'prefix' => 'CH'
-                ]
+                    'prefix' => 'CH',
+                ],
             ],
             'homeCountry' => [
                 'id' => 1,
                 'name' => 'Deutschland',
-                'prefix' => 'D'
-            ]
+                'prefix' => 'D',
+            ],
         ];
 
         $this->checker = new CountryChecker($options);
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -69,9 +64,7 @@ class CountryCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -79,8 +72,7 @@ class CountryCheckerTest extends TestCase
     }
 
     /**
-     * test if countries as found correctly
-     *
+     * test if countries as found correctly.
      */
     public function testIsDeliverable()
     {
@@ -118,5 +110,4 @@ class CountryCheckerTest extends TestCase
             $this->assertEquals($expected[$key]['name'], $result['name']);
         }
     }
-
 }

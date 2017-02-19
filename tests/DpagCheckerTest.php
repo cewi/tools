@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\DpagChecker;
 
 /**
- * DpagCheckerTest
+ * DpagCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class DpagCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
-     * setUp method
-     *
-     * @return void
+     * setUp method.
      */
     public function setUp()
     {
@@ -28,9 +25,7 @@ class DpagCheckerTest extends TestCase
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -38,9 +33,7 @@ class DpagCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -48,7 +41,7 @@ class DpagCheckerTest extends TestCase
     }
 
     /**
-     * Postfach-check
+     * Postfach-check.
      */
     public function testIsDeliverable()
     {
@@ -57,23 +50,23 @@ class DpagCheckerTest extends TestCase
                 'name' => 'Erika Mustermann',
                 'zip' => 88888,
                 'city' => 'Musterstadt',
-                'country_id' => 1
+                'country_id' => 1,
             ],
             [
                 'name' => 'Erika Mustermann',
                 'city' => 'Musterheim',
-                'country_id' => 1
+                'country_id' => 1,
             ],
             [
                 'name' => 'Erika Mustermann',
                 'zip' => 88888,
                 'city' => 'Musterheim',
-                'country_id' => 2
+                'country_id' => 2,
             ],
             [
                 'name' => 'Erika Mustermann',
                 'zip' => 88888,
-                'city' => 'Musterstadt'
+                'city' => 'Musterstadt',
             ],
         ];
         $expected = [
@@ -82,7 +75,7 @@ class DpagCheckerTest extends TestCase
                 'name' => 'Erika Mustermann',
                 'zip' => 88888,
                 'city' => 'Musterstadt',
-                'country_id' => 1
+                'country_id' => 1,
             ],
             false, // zip missing
             false, // country_id not home country
@@ -96,5 +89,4 @@ class DpagCheckerTest extends TestCase
             }
         }
     }
-
 }

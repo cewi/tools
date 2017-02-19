@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\OwnChecker;
 
 /**
- * PostboxCheckerTest
+ * PostboxCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class OwnCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
-     * setUp method
-     *
-     * @return void
+     * setUp method.
      */
     public function setUp()
     {
@@ -30,12 +27,12 @@ class OwnCheckerTest extends TestCase
             'zipCities' => [
                 88888 => [
                     'pattern' => 'musterstadt|klein(?: )?musterstadt',
-                    'id' => 1
+                    'id' => 1,
                 ],
                 88889 => [
                     'pattern' => 'musterheim|musterhausen',
-                    'id' => 2
-                ]
+                    'id' => 2,
+                ],
             ],
             'zipStreets' => [
                 88888 => [
@@ -44,29 +41,29 @@ class OwnCheckerTest extends TestCase
                         'id' => 1,
                         'region_id' => 1,
                         'length' => 13,
-                        'name' => 'Musterstraße'
+                        'name' => 'Musterstraße',
                     ],
                     1 => [
                         'pattern' => 'master(?: )?strasse',
                         'id' => 1,
                         'region_id' => 1,
                         'length' => 13,
-                        'name' => 'Musterstraße'
+                        'name' => 'Musterstraße',
                     ],
                     2 => [
                         'pattern' => 'am(?: )?weg',
                         'id' => 2,
                         'region_id' => 1,
                         'length' => 6,
-                        'name' => 'Am Weg'
+                        'name' => 'Am Weg',
                     ],
                     3 => [
                         'pattern' => 'im(?: )?weg',
                         'id' => 2,
                         'region_id' => 1,
                         'length' => 6,
-                        'name' => 'Am Weg'
-                    ]
+                        'name' => 'Am Weg',
+                    ],
                 ],
                 88889 => [
                     0 => [
@@ -74,24 +71,22 @@ class OwnCheckerTest extends TestCase
                         'id' => 3,
                         'region_id' => 2,
                         'length' => 11,
-                        'name' => 'Musterweg'
+                        'name' => 'Musterweg',
                     ],
                     1 => [
                         'pattern' => 'master(?: )?weg',
                         'id' => 3,
                         'region_id' => 2,
                         'length' => 11,
-                        'name' => 'Musterweg'
+                        'name' => 'Musterweg',
                     ],
                 ],
-            ]
+            ],
         ]);
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -99,9 +94,7 @@ class OwnCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -109,7 +102,7 @@ class OwnCheckerTest extends TestCase
     }
 
     /**
-     * address -check
+     * address -check.
      */
     public function testIsDeliverable()
     {
@@ -117,22 +110,22 @@ class OwnCheckerTest extends TestCase
             [
                 'name' => 'Erika Mustermann Musterstraße 88 // 2',
                 'zip' => 88888,
-                'city' => 'Musterstadt'
+                'city' => 'Musterstadt',
             ],
             [
                 'name' => 'Erika Mustermann Musterweg 8a',
                 'zip' => 88889,
-                'city' => 'Musterheim'
+                'city' => 'Musterheim',
             ],
             [
                 'name' => 'Erika Mustermann Musterstraße 8',
                 'zip' => 88888,
-                'city' => 'Musterheim'
+                'city' => 'Musterheim',
             ],
             [
                 'name' => 'Erika Mustermann NoStreet 1',
                 'zip' => 88888,
-                'city' => 'Musterstadt'
+                'city' => 'Musterstadt',
             ],
         ];
         $expected = [
@@ -146,7 +139,7 @@ class OwnCheckerTest extends TestCase
                 'number_letter' => '// 2',
                 'zip' => 88888,
                 'city' => 'Musterstadt',
-                'city_id' => 1
+                'city_id' => 1,
             ],
             [
                 'type' => 'Success',
@@ -158,7 +151,7 @@ class OwnCheckerTest extends TestCase
                 'number_letter' => 'a',
                 'zip' => 88889,
                 'city' => 'Musterheim',
-                'city_id' => 2
+                'city_id' => 2,
             ],
             false, // city and zip doesn't match
             [
@@ -166,7 +159,7 @@ class OwnCheckerTest extends TestCase
                 'name' => 'Erika Mustermann NoStreet 1',
                 'zip' => 88888,
                 'city' => 'Musterstadt',
-                'city_id' => 1
+                'city_id' => 1,
             ], // street not found
         ];
         foreach ($addresses as $key => $address) {
@@ -177,5 +170,4 @@ class OwnCheckerTest extends TestCase
             }
         }
     }
-
 }

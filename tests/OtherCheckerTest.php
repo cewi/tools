@@ -1,24 +1,21 @@
 <?php
 
-require_once __DIR__ . '/../../../autoload.php';
+require_once __DIR__.'/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cewi\Checkers\OtherChecker;
 
 /**
- * PostboxCheckerTest
+ * PostboxCheckerTest.
  *
  * @author cewi <c.wichmann@gmx.de>
  */
 class OtherCheckerTest extends TestCase
 {
-
     public $checker;
 
     /**
-     * setUp method
-     *
-     * @return void
+     * setUp method.
      */
     public function setUp()
     {
@@ -26,14 +23,12 @@ class OtherCheckerTest extends TestCase
 
         $this->checker = new OtherChecker([
             'type' => 'Other',
-            'zips' => [88, 66]
+            'zips' => [88, 66],
         ]);
     }
 
     /**
-     * tearDown method
-     *
-     * @return void
+     * tearDown method.
      */
     public function tearDown()
     {
@@ -41,9 +36,7 @@ class OtherCheckerTest extends TestCase
     }
 
     /**
-     * Test initial setup
-     *
-     * @return void
+     * Test initial setup.
      */
     public function testInitialization()
     {
@@ -51,7 +44,7 @@ class OtherCheckerTest extends TestCase
     }
 
     /**
-     * Postfach-check
+     * Postfach-check.
      */
     public function testIsDeliverable()
     {
@@ -65,7 +58,7 @@ class OtherCheckerTest extends TestCase
             [
                 'zip' => '99999', // not enough digits
             ],
-            
+
         ];
         $expected = [
             ['type' => 'Other', 'zip' => '88888'],
@@ -80,5 +73,4 @@ class OtherCheckerTest extends TestCase
             }
         }
     }
-
 }

@@ -3,35 +3,32 @@
 namespace Cewi\Checkers;
 
 /**
- * Checks, if an Address could be deliverd by Dpag
+ * Checks, if an Address could be deliverd by Dpag.
  *
  * @author cewi <c.wichmann@gmx.de>
  * @license https://opensource.org/licenses/MIT
  */
 class DpagChecker implements CheckerInterface
 {
-
     /**
-     * how to deliver these envelopes
+     * how to deliver these envelopes.
      *
      * @var string
      */
     protected $_type = 'Error';
 
     /**
-     *
      * @var array
      */
     protected $_address = [];
 
     /**
-     *
-     * @var integer
+     * @var int
      */
     protected $_homeCountryId = 9999999;
 
     /**
-     * set type for delivery
+     * set type for delivery.
      *
      * @param array $options
      */
@@ -42,15 +39,15 @@ class DpagChecker implements CheckerInterface
     }
 
     /**
-     * check if address contains valid german postbox string
+     * check if address contains valid german postbox string.
      *
      * @param array $address
-     * @return boolean
+     *
+     * @return bool
      */
     public function isDeliverable($address)
     {
         $this->_address = $address;
-
         if (
                 isset($address['zip']) &&
                 isset($address['city']) &&
@@ -58,13 +55,15 @@ class DpagChecker implements CheckerInterface
                 ($address['country_id'] == $this->_homeCountryId)
         ) {
             $this->_address['type'] = $this->_type;
+
             return true;
         }
+
         return false;
     }
 
     /**
-     * get changed Address
+     * get changed Address.
      *
      * @return array
      */
@@ -72,5 +71,4 @@ class DpagChecker implements CheckerInterface
     {
         return $this->_address;
     }
-
 }
