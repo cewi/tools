@@ -3,14 +3,14 @@
 require_once __DIR__ . '/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
-use Cewi\Checkers\PostboxChecker;
+use Cewi\Checkers\DpagChecker;
 
 /**
- * PostboxCheckerTest
+ * DpagCheckerTest
  *
  * @author cewi <c.wichmann@gmx.de>
  */
-class PostboxCheckerTest extends TestCase
+class DpagCheckerTest extends TestCase
 {
 
     public $checker;
@@ -24,7 +24,7 @@ class PostboxCheckerTest extends TestCase
     {
         parent::setUp();
 
-        $this->checker = new PostboxChecker(['type' => 'Success']);
+        $this->checker = new DpagChecker(['type' => 'Success', 'homeCountryId' => 1]);
     }
 
     /**
@@ -44,7 +44,7 @@ class PostboxCheckerTest extends TestCase
      */
     public function testInitialization()
     {
-        $this->assertInstanceOf('Cewi\Checkers\PostboxChecker', $this->checker);
+        $this->assertInstanceOf('Cewi\Checkers\DpagChecker', $this->checker);
     }
 
     /**
@@ -54,31 +54,40 @@ class PostboxCheckerTest extends TestCase
     {
         $addresses = [
             [
-                'name' => 'Erika Mustermann Ginsterstraße 8',
+                'name' => 'Erika Mustermann',
+                'zip' => 88888,
+                'city' => 'Musterstadt',
+                'country_id' => 1
             ],
             [
-                'name' => 'Erika Mustermann Postfach 12345',
+                'name' => 'Erika Mustermann',
+                'city' => 'Musterheim',
+                'country_id' => 1
             ],
             [
-                'name' => 'Erika Mustermann Postfach 1', // not enough digits
+                'name' => 'Erika Mustermann',
+                'zip' => 88888,
+                'city' => 'Musterheim',
+                'country_id' => 2
             ],
             [
-                'name' => 'Erika Mustermann Postfach 1112222222', // too many digits
-            ],
-            [
-                'name' => 'Erika MustermannPostfach 12345', // no whitspace before Posfach will be found either!
-            ],
-            [
-                'name' => 'Erika Mustermann Pf 12345',
+                'name' => 'Erika Mustermann',
+                'zip' => 88888,
+                'city' => 'Musterstadt'
             ],
         ];
         $expected = [
+            [
+                'type' => 'Success',
+                'name' => 'Erika Mustermann',
+                'zip' => 88888,
+                'city' => 'Musterstadt',
+                'country_id' => 1
+            ],
             false,
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Postfach 12345'],
             false,
-            false,
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Postfach 12345'],
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Pf 12345'],
+            false, // city and zip doesn't match
+           
         ];
         foreach ($addresses as $key => $address) {
             if ($this->checker->isDeliverable($address)) {

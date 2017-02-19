@@ -3,14 +3,14 @@
 require_once __DIR__ . '/../../../autoload.php';
 
 use PHPUnit\Framework\TestCase;
-use Cewi\Checkers\PostboxChecker;
+use Cewi\Checkers\OtherChecker;
 
 /**
  * PostboxCheckerTest
  *
  * @author cewi <c.wichmann@gmx.de>
  */
-class PostboxCheckerTest extends TestCase
+class OtherCheckerTest extends TestCase
 {
 
     public $checker;
@@ -24,7 +24,10 @@ class PostboxCheckerTest extends TestCase
     {
         parent::setUp();
 
-        $this->checker = new PostboxChecker(['type' => 'Success']);
+        $this->checker = new OtherChecker([
+            'type' => 'Other',
+            'zips' => [88, 66]
+        ]);
     }
 
     /**
@@ -44,7 +47,7 @@ class PostboxCheckerTest extends TestCase
      */
     public function testInitialization()
     {
-        $this->assertInstanceOf('Cewi\Checkers\PostboxChecker', $this->checker);
+        $this->assertInstanceOf('Cewi\Checkers\OtherChecker', $this->checker);
     }
 
     /**
@@ -54,31 +57,20 @@ class PostboxCheckerTest extends TestCase
     {
         $addresses = [
             [
-                'name' => 'Erika Mustermann Ginsterstraße 8',
+                'zip' => '88888',
             ],
             [
-                'name' => 'Erika Mustermann Postfach 12345',
+                'zip' => '88889',
             ],
             [
-                'name' => 'Erika Mustermann Postfach 1', // not enough digits
+                'zip' => '99999', // not enough digits
             ],
-            [
-                'name' => 'Erika Mustermann Postfach 1112222222', // too many digits
-            ],
-            [
-                'name' => 'Erika MustermannPostfach 12345', // no whitspace before Posfach will be found either!
-            ],
-            [
-                'name' => 'Erika Mustermann Pf 12345',
-            ],
+            
         ];
         $expected = [
+            ['type' => 'Other', 'zip' => '88888'],
+            ['type' => 'Other', 'zip' => '88889'],
             false,
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Postfach 12345'],
-            false,
-            false,
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Postfach 12345'],
-            ['type' => 'Success', 'name' => 'Erika Mustermann', 'street' => 'Pf 12345'],
         ];
         foreach ($addresses as $key => $address) {
             if ($this->checker->isDeliverable($address)) {
