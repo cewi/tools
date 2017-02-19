@@ -84,10 +84,9 @@ class DpagCheckerTest extends TestCase
                 'city' => 'Musterstadt',
                 'country_id' => 1
             ],
-            false,
-            false,
-            false, // city and zip doesn't match
-           
+            false, // zip missing
+            false, // country_id not home country
+            false, // country_id is missing
         ];
         foreach ($addresses as $key => $address) {
             if ($this->checker->isDeliverable($address)) {
